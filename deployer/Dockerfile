@@ -4,7 +4,7 @@ FROM marketplace.gcr.io/google/debian9 AS build
 RUN apt-get update \
     && apt-get install -y --no-install-recommends gettext
 
-ADD chart/citrix-k8s-cpx-ingress-controller /tmp/chart/
+ADD chart/citrix-adc-cpx /tmp/chart/
 RUN cd /tmp && tar -czvf /tmp/cpx.tar.gz chart
 
 ADD apptest/deployer/citrix-adc-cpx /tmp/test/chart

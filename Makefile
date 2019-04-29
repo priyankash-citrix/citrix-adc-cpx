@@ -61,8 +61,8 @@ app/build:: .build/citrix-adc-cpx/debian9  \
 
 
 .build/citrix-adc-cpx/deployer: deployer/* \
-                       chart/citrix-k8s-cpx-ingress-controller/* \
-                       chart/citrix-k8s-cpx-ingress-controller/templates/* \
+                       chart/citrix-adc-cpx/* \
+                       chart/citrix-adc-cpx/templates/* \
                        schema.yaml \
                        .build/var/APP_DEPLOYER_IMAGE \
                        .build/var/MARKETPLACE_TOOLS_TAG \

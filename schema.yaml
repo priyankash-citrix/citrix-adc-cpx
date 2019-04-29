@@ -16,7 +16,7 @@ properties:
   cic.required:
     type: boolean
     title: Citrix Ingress Controller
-    description: "True" if CIC is required for Citrix ADC CPX
+    description: Set if CIC is required for Citrix ADC CPX
     default: false
   cpx.image:
     type: string
@@ -67,9 +67,9 @@ properties:
   exporter.required:
     type: boolean
     title: Prometheus Exporter
-    description: "True" if exporter is needed with Citrix ADC CPX
+    description: Set if exporter is needed with Citrix ADC CPX
     default: false
-  exporter.ports.containerPort: 8888
+  exporter.ports.containerPort:
     type: integer
     title: Prometheus Exporter Port
     description: Specify on which port metrics collected by the exporter should be exposed.
