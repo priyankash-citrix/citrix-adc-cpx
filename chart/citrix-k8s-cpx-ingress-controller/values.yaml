@@ -8,11 +8,12 @@
 # Declare variables to be passed into your templates.
 
 # cpximage contains information needed to fetch CPX image
-cpximage:
+cpx:
   image: "quay.io/citrix/citrix-k8s-cpx-ingress:12.1-51.16"
   pullPolicy: Always
 # cicimage contains information needed to fetch CIC image
-cicimage:
+cic:
+  required: false
   image: "quay.io/citrix/citrix-k8s-ingress-controller:1.1.1"
   pullPolicy: Always
 # license is used accept the terms of the Citrix license
@@ -24,10 +25,8 @@ ingressClass:
 logLevel: DEBUG
 # exporter conatins information of prometheus-exporter
 exporter:
-  require: 0
-  image:
-    repository: quay.io/citrix/netscaler-metrics-exporter
-    tag: v1.0.4
-    pullPolicy: Always
+  required: false
+  image: "quay.io/citrix/netscaler-metrics-exporter:v1.0.4"
+  pullPolicy: Always
   ports:
     containerPort: 8888

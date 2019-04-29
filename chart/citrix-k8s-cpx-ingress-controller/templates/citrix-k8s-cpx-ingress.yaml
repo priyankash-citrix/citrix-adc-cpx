@@ -1,4 +1,3 @@
-
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -15,8 +14,8 @@ spec:
       serviceAccountName: {{ .Values.serviceAccount }}
       containers:
         - name: cpx-ingress
-          image: "{{ .Values.cpximage.image }}"
-          imagePullPolicy: {{ .Values.cpximage.pullPolicy }}
+          image: "{{ .Values.cpx.image }}"
+          imagePullPolicy: {{ .Values.cpx.pullPolicy }}
           securityContext:
              privileged: true
           env:
@@ -24,11 +23,11 @@ spec:
             value: "{{ .Values.license.accept }}"
           - name: "KUBERNETES_TASK_ID"
             value: ""
-{{- if .Values.cic.require }}
+{{- if .Values.cic.required }}
         # Add cic as a sidecar
         - name: cic
-          image: "{{ .Values.cicimage.image }}"
-          imagePullPolicy: {{ .Values.cicimage.pullPolicy }}
+          image: "{{ .Values.cic.image }}"
+          imagePullPolicy: {{ .Values.cic.pullPolicy }}
           env:
           - name: "EULA"
             value: "{{ .Values.license.accept }}"
@@ -64,13 +63,13 @@ spec:
 {{- end }}
 {{- end }}
 {{- end }}
-{{- if .Values.exporter.require }}
+{{- if .Values.exporter.required }}
         - name: exporter
-          image: "{{ .Values.exporter.image.repository }}:{{ .Values.exporter.image.tag }}"
+          image: "{{ .Values.exporter.image }}"
           args:
             - "--target-nsip=127.0.0.1"
             - "--port={{ .Values.exporter.ports.containerPort }}"
-          imagePullPolicy: {{ .Values.exporter.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.exporter.pullPolicy }}
 {{- end }}
 
 ---
@@ -92,7 +91,7 @@ spec:
   - port: 443
     protocol: TCP
     name: https
-{{- if .Values.exporter.require }}
+{{- if .Values.exporter.required }}
   - port: {{ .Values.exporter.ports.containerPort }}
     targetPort: {{ .Values.exporter.ports.containerPort }}
     name: exporter-port
@@ -102,7 +101,7 @@ spec:
 
 ---
 
-{{- if .Values.exporter.require }}
+{{- if .Values.exporter.required }}
 
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
