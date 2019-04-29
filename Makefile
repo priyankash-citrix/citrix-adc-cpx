@@ -14,7 +14,7 @@ ifdef IMAGE_CITRIX_CPX
   IMAGE_CITRIX_CPX_FIELD = , "cpximage.image": "$(IMAGE_CITRIX_CPX)" endif
 endif
 
-fdef IMAGE_CITRIX_CONTROLLER
+ifdef IMAGE_CITRIX_CONTROLLER
   IMAGE_CITRIX_CONTROLLER_FIELD = , "cicimage.image": "$(IMAGE_CITRIX_CONTROLLER)" endif
 endif
 
@@ -53,8 +53,8 @@ app/build:: .build/citrix-adc-cpx/debian9  \
 
 
 .build/citrix-adc-cpx/deployer: deployer/* \
-                       chart/citrix-adc-cpx/* \
-                       chart/citrix-adc-cpx/templates/* \
+                       chart/citrix-k8s-cpx-ingress-controller/* \
+                       chart/citrix-k8s-cpx-ingress-controller/templates/* \
                        schema.yaml \
                        .build/var/APP_DEPLOYER_IMAGE \
                        .build/var/MARKETPLACE_TOOLS_TAG \
@@ -75,8 +75,8 @@ app/build:: .build/citrix-adc-cpx/debian9  \
 .build/citrix-adc-cpx/citrix-adc-cpx: .build/var/REGISTRY \
                     .build/var/TAG \
                     | .build/citrix-adc-cpx
-	docker pull quay.io/citrix/citrix-k8s-cpx-ingress:$(TAG)
-	docker tag quay.io/citrix/citrix-k8s-cpx-ingress:$(TAG) \
+	docker pull quay.io/citrix/citrix-k8s-cpx-ingress:12.1-51.16
+	docker tag quay.io/citrix/citrix-k8s-cpx-ingress:12.1-51.16 \
 	    "$(REGISTRY)/citrix-adc-cpx:$(TAG)"
 	docker push "$(REGISTRY)/citrix-adc-cpx:$(TAG)"
 	@touch "$@"

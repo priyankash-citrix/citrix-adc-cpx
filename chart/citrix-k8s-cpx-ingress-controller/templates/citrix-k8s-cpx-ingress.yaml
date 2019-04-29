@@ -24,6 +24,7 @@ spec:
             value: "{{ .Values.license.accept }}"
           - name: "KUBERNETES_TASK_ID"
             value: ""
+{{- if .Values.cic.require }}
         # Add cic as a sidecar
         - name: cic
           image: "{{ .Values.cicimage.image }}"
@@ -60,6 +61,7 @@ spec:
            - --ingress-class
 {{- range .Values.ingressClass}}
             {{.}}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- if .Values.exporter.require }}
