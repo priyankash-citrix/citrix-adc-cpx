@@ -17,15 +17,24 @@
 set -xeo pipefail
 shopt -s nullglob
 
+POD_NAME=$(kubectl get pod -oname \
+        --namespace default | \
+        sed -n "/\\/${APP_INSTANCE_NAME}-cpx-ingress/s.pods\\?/..p")
+
+POD_IP=$(kubectl get pods "${POD_NAME}" \
+      --namespace default -ojsonpath="{.status.podIP}")
+
 if [[ "${PUBLIC_IP_AVAILABLE}" == "true" ]]; then
-  EXTERNAL_IP="$(kubectl get service/${APP_INSTANCE_NAME}-nginx-svc \
+  EXTERNAL_IP="$(kubectl get service/${APP_INSTANCE_NAME}-cpx-service \
     --namespace ${NAMESPACE} \
     --output jsonpath='{.status.loadBalancer.ingress[0].ip}')"
 else
-  EXTERNAL_IP="${APP_INSTANCE_NAME}-nginx-svc"
+  EXTERNAL_IP="${APP_INSTANCE_NAME}-cpx-service"
 fi
 
 export EXTERNAL_IP
+export POD_NAME
+export POD_IP
 
 for test in /tests/*; do
   testrunner -logtostderr "--test_spec=${test}"

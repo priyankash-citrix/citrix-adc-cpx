@@ -83,7 +83,7 @@ metadata:
     service-type: citrix-adc-monitor
     app.kubernetes.io/name: "{{ .Release.Name }}"
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 80
     protocol: TCP
@@ -97,7 +97,7 @@ spec:
     name: exporter-port
 {{- end }}
   selector:
-    app: cpx-ingress
+    app: {{ .Release.Name }}-cpx-ingress
 
 ---
 

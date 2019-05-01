@@ -77,6 +77,10 @@ app/build:: .build/citrix-adc-cpx/debian9  \
 	    -f deployer/Dockerfile \
 	    .
 	docker push "$(APP_DEPLOYER_IMAGE)"
+	docker pull "$(APP_DEPLOYER_IMAGE)"
+	docker tag "$(APP_DEPLOYER_IMAGE)" \
+            "$(REGISTRY)/citrix-adc-cpx/deployer:$(GCP_TAG)"
+	docker push "$(REGISTRY)/citrix-adc-cpx/deployer:$(GCP_TAG)"
 	@touch "$@"
 
 
@@ -86,7 +90,10 @@ app/build:: .build/citrix-adc-cpx/debian9  \
 	docker pull quay.io/citrix/citrix-k8s-cpx-ingress:$(CPX_TAG)
 	docker tag quay.io/citrix/citrix-k8s-cpx-ingress:$(CPX_TAG) \
 	    "$(REGISTRY)/citrix-adc-cpx:$(TAG)"
+	docker tag quay.io/citrix/citrix-k8s-cpx-ingress:$(CPX_TAG) \
+            "$(REGISTRY)/citrix-adc-cpx:$(GCP_TAG)"
 	docker push "$(REGISTRY)/citrix-adc-cpx:$(TAG)"
+	docker push "$(REGISTRY)/citrix-adc-cpx:$(GCP_TAG)"
 	@touch "$@"
 
 
