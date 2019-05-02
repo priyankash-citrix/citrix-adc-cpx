@@ -58,9 +58,7 @@ spec:
 {{- if .Values.ingressClass }}
           args:
            - --ingress-class
-{{- range .Values.ingressClass}}
-            {{.}}
-{{- end }}
+            {{ .Values.ingressClass }}
 {{- end }}
 {{- end }}
 {{- if .Values.exporter.required }}

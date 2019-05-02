@@ -21,7 +21,7 @@ license:
   accept: yes
 # ingressClass is the  name of the Ingress Class
 ingressClass:
-
+serviceAccount: default
 logLevel: DEBUG
 # exporter conatins information of prometheus-exporter
 exporter:
