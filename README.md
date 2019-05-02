@@ -72,8 +72,10 @@ community. The source code can be found on
 
 ### **Install the Application**
 
-Go to GoogleCloudPlatform/click-to-deploy/k8s folder and clone this repo. Go to citrix-adc-cpx:
+Go to click-to-deploy/k8s folder and clone this repo. Go to citrix-adc-cpx:
 ```shell
+cd click-to-deploy/k8s
+git clone https://github.com/priyankash-citrix/citrix-adc-cpx.git
 cd citrix-adc-cpx
 ```
 
@@ -104,7 +106,7 @@ CITRIX_SERVICEACCOUNT=cic-k8s-role
 
 Create a service account with required permissions:
 ```shell
-cat service_account.yaml | sed -e "s/{NAMESPACE}/$CITRIX_NAMESPACE/g" -e "s/{SERVICEACCOUNTNAME}/$CITRIX_SERVICEACCOUNT/g" | kubectl apply -f -
+cat service_account.yaml | sed -e "s/{NAMESPACE}/$CITRIX_NAMESPACE/g" -e "s/{SERVICEACCOUNTNAME}/$CITRIX_SERVICEACCOUNT/g" | kubectl delete -f -
 ```
 
 > NOTE: The above are the mandatory parameters. In addition to these you can also assign values to the parameters mentioned in the above table.
@@ -114,7 +116,7 @@ Create a template for the chart using the parameters you want to set:
 helm template chart/citrix-adc-cpx \
   --name $CITRIX_NAME \
   --namespace $CITRIX_NAMESPACE \
-  --set license.accept=yes \ 
+  --set license.accept=yes \
   --set serviceAccount=$CITRIX_SERVICEACCOUNT > /tmp/$CITRIX_NAME.yaml
 ```
 
@@ -127,6 +129,7 @@ kubectl apply -f /tmp/$CITRIX_NAME.yaml
 Delete the application and cluster:
 ```shell
 kubectl delete -f /tmp/$CITRIX_NAME.yaml
+cat service_account.yaml | sed -e "s/{NAMESPACE}/$CITRIX_NAMESPACE/g" -e "s/{SERVICEACCOUNTNAME}/$CITRIX_SERVICEACCOUNT/g" | kubectl delete -f -
 gcloud container clusters delete citrix-cpx --zone asia-south1-a
 ```
 
