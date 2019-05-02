@@ -79,7 +79,7 @@ git clone https://github.com/priyankash-citrix/citrix-adc-cpx.git
 cd citrix-adc-cpx
 ```
 
-## Configuration
+#### Configuration
 The following table lists the configurable parameters of the CPX with Citrix ingress controller running as side-car chart and their default values.
 
 | Parameter | Description | Default |
@@ -106,7 +106,7 @@ CITRIX_SERVICEACCOUNT=cic-k8s-role
 
 Create a service account with required permissions:
 ```shell
-cat service_account.yaml | sed -e "s/{NAMESPACE}/$CITRIX_NAMESPACE/g" -e "s/{SERVICEACCOUNTNAME}/$CITRIX_SERVICEACCOUNT/g" | kubectl delete -f -
+cat service_account.yaml | sed -e "s/{NAMESPACE}/$CITRIX_NAMESPACE/g" -e "s/{SERVICEACCOUNTNAME}/$CITRIX_SERVICEACCOUNT/g" | kubectl create -f -
 ```
 
 > NOTE: The above are the mandatory parameters. In addition to these you can also assign values to the parameters mentioned in the above table.
@@ -122,11 +122,11 @@ helm template chart/citrix-adc-cpx \
 
 Finally, deploy the chart:
 ```shell
-kubectl apply -f /tmp/$CITRIX_NAME.yaml
+kubectl create -f /tmp/$CITRIX_NAME.yaml
 ```
 
-#### **Uninstall the Application**
-Delete the application and cluster:
+### **Uninstall the Application**
+Delete the application, service account and cluster:
 ```shell
 kubectl delete -f /tmp/$CITRIX_NAME.yaml
 cat service_account.yaml | sed -e "s/{NAMESPACE}/$CITRIX_NAMESPACE/g" -e "s/{SERVICEACCOUNTNAME}/$CITRIX_SERVICEACCOUNT/g" | kubectl delete -f -
