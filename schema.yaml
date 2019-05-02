@@ -15,7 +15,7 @@ properties:
     default: "no"
   cic.image:
     type: string
-    default: "quay.io/citrix/citrix-k8s-ingress-controller:1.1.1"
+    default: $REGISTRY/citrix-k8s-ingress-controller:$TAG"
     x-google-marketplace:
       type: IMAGE
   cic.required:
@@ -25,7 +25,7 @@ properties:
     default: false
   cpx.image:
     type: string
-    default: "quay.io/citrix/citrix-k8s-cpx-ingress:12.1-51.16"
+    default: $REGISTRY:$TAG
     x-google-marketplace:
       type: IMAGE
   serviceAccount:
@@ -60,7 +60,7 @@ properties:
     description: Please provide name of the Ingress Class if needs to be supported by Citrix Ingress Controller.
   exporter.image:
     type: string
-    default: "quay.io/citrix/netscaler-metrics-exporter:v1.0.4"
+    default: $REGISTRY/netscaler-metrics-exporter:$TAG
     x-google-marketplace:
       type: IMAGE
   exporter.required:
