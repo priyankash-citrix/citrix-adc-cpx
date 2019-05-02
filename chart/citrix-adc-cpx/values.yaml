@@ -18,7 +18,7 @@ cic:
   pullPolicy: Always
 # license is used accept the terms of the Citrix license
 license:
-  accept: yes
+  accept: no
 # ingressClass is the  name of the Ingress Class
 ingressClass:
 serviceAccount: default

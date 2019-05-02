@@ -96,7 +96,6 @@ The following table lists the configurable parameters of the CPX with Citrix ing
 |```logLevel```|Optional: This is used for controlling the logs generated from Citrix Ingress Controller. options available are CRITICAL ERROR WARNING INFO DEBUG |```DEBUG```|
 
 Assign values to the required parameters:
-
 ```shell
 CITRIX_NAME=citrix-1
 CITRIX_NAMESPACE=default
@@ -104,8 +103,9 @@ CITRIX_SERVICEACCOUNT=cic-k8s-role
 ```
 
 Create a service account with required permissions:
-
-```cat service_account.yaml | sed "s/NAMESPACE/$CITRIX_NAMESPACE/g; s/SERVICEACCOUNTNAME/$CITRIX_SERVICEACCOUNT" | kubectl apply -f -```
+```shell
+cat service_account.yaml | sed -e "s/{NAMESPACE}/$CITRIX_NAMESPACE/g" -e "s/{SERVICEACCOUNTNAME}/$CITRIX_SERVICEACCOUNT/g" | kubectl apply -f -
+```
 
 > NOTE: The above are the mandatory parameters. In addition to these you can also assign values to the parameters mentioned in the above table.
 
@@ -113,7 +113,8 @@ Create a template for the chart using the parameters you want to set:
 ```
 helm template chart/citrix-adc-cpx \
   --name $CITRIX_NAME \
-  --namespace $CITRIX_NAMESPACE 
+  --namespace $CITRIX_NAMESPACE \
+  --set license.accept=yes \ 
   --set serviceAccount=$CITRIX_SERVICEACCOUNT > /tmp/$CITRIX_NAME.yaml
 ```
 
