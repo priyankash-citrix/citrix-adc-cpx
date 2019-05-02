@@ -15,7 +15,7 @@ properties:
     default: "no"
   cic.image:
     type: string
-    default: $REGISTRY/citrix-k8s-ingress-controller:$TAG"
+    default: $REGISTRY/citrix-k8s-ingress-controller:$TAG
     x-google-marketplace:
       type: IMAGE
   cic.required:
