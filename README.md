@@ -72,11 +72,11 @@ community. The source code can be found on
 
 ### **Install the Application**
 
-Go to click-to-deploy/k8s folder and clone this repo. Go to citrix-adc-cpx:
+Go to click-to-deploy/k8s folder and clone this repo. Go to citrix-adc-cpx-gcp-marketplace directory:
 ```shell
 cd click-to-deploy/k8s
-git clone https://github.com/priyankash-citrix/citrix-adc-cpx.git
-cd citrix-adc-cpx
+git clone https://github.com/citrix/citrix-adc-cpx-gcp-marketplace.git
+cd citrix-adc-cpx-gcp-marketplace/
 ```
 
 #### Configuration
@@ -130,7 +130,7 @@ Delete the application, service account and cluster:
 ```shell
 kubectl delete -f /tmp/$CITRIX_NAME.yaml
 cat service_account.yaml | sed -e "s/{NAMESPACE}/$CITRIX_NAMESPACE/g" -e "s/{SERVICEACCOUNTNAME}/$CITRIX_SERVICEACCOUNT/g" | kubectl delete -f -
-gcloud container clusters delete citrix-cpx --zone asia-south1-a
+gcloud container clusters delete "$CLUSTER" --zone "$ZONE"
 ```
 
 # **Code of Conduct**
