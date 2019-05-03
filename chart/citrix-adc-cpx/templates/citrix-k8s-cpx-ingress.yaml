@@ -79,17 +79,6 @@ spec:
             - "--target-nsip=127.0.0.1"
             - "--port={{ .Values.exporter.ports.containerPort }}"
           imagePullPolicy: {{ .Values.exporter.pullPolicy }}
-          #This is required for Health check to succeed
-          readinessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /
-              port: 8888
-              scheme: HTTP
-            initialDelaySeconds: 60
-            periodSeconds: 5
-            successThreshold: 1
-            timeoutSeconds: 1
 {{- end }}
 
 ---
@@ -111,6 +100,9 @@ spec:
   - port: 443
     protocol: TCP
     name: https
+  - port: 9080
+    protocol: TCP
+    name: nitro
 {{- if .Values.exporter.required }}
   - port: {{ .Values.exporter.ports.containerPort }}
     targetPort: {{ .Values.exporter.ports.containerPort }}
